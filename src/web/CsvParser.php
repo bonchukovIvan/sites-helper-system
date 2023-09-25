@@ -22,19 +22,20 @@ class CsvParser {
         }
 
         $domains = array();
-        
-        foreach(str_getcsv($csv_data) as $item) { 
-            if (!StringHelper::ends_with($item, self::SUB_DOMAIN)) {
+        foreach(str_getcsv($csv_data) as $item) {
+            $clear_item = trim($item);
+
+            if (!StringHelper::ends_with(trim($clear_item), self::SUB_DOMAIN)) {
                 continue;
             }
-            if (!StringHelper::starts_with($item,'https') || !StringHelper::starts_with($item,'http')) {
-                array_push($domains, 'https://'.$item);
+            if (!StringHelper::starts_with($clear_item,'https') || !StringHelper::starts_with($clear_item,'http')) {
+                    array_push($domains, 'https://'.$clear_item);
             }
             else {
-                array_push($domains, $item);
+                    array_push($domains, $clear_item);
             }
         }
-        
+
         return $domains;
     }
 }

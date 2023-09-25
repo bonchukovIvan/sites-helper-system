@@ -2,9 +2,28 @@
 
 namespace app\web;
 
+require_once('src/helpers/ArrayHelper.php');
+
+use app\helpers\ArrayHelper;
 use UnexpectedValueException;
 
 class DomainsChecker {
+
+    public static function create_domain_list($domains_array) {
+        $http_array = self::check_domains($domains_array); 
+    
+        $suspected_domains = ArrayHelper::create_suspected_array($http_array);
+        if(!$suspected_domains) {
+            return $http_array;
+        } else {
+            $suspected_domains = array_keys($suspected_domains);
+            $new_http_array = self::check_domains($suspected_domains); 
+            $suspected_domains = ArrayHelper::create_suspected_array($new_http_array);
+    
+            $http_array = array_merge($http_array, $new_http_array);
+            return $http_array;
+        }
+    }
 
     public static function check_domains($domains) {
         if(!is_array($domains)) {
@@ -32,6 +51,7 @@ class DomainsChecker {
             curl_setopt($handle, CURLOPT_URL, $domain);
             curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($handle, CURLOPT_VERBOSE, false);
+            curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 15);
             curl_setopt($handle, CURLOPT_FOLLOWLOCATION, true);
 
             if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')){
