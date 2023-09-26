@@ -2,7 +2,6 @@
 
 namespace app\messangers;
 
-require_once('BaseMessanger.php');
 use app\messangers\BaseMessanger;
 
 class Mailer extends BaseMessanger {

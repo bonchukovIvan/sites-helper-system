@@ -2,8 +2,6 @@
 
 namespace app\web;
 
-require_once('src/helpers/ArrayHelper.php');
-
 use app\helpers\ArrayHelper;
 use UnexpectedValueException;
 

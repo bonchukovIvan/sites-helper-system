@@ -2,14 +2,6 @@
 
 namespace app;
 
-require_once('src/web/CsvParser.php');
-require_once('src/web/DomainsChecker.php');
-require_once('src/helpers/ArrayHelper.php');
-
-require_once('src/log/Logger.php');
-require_once('src/messangers/Mailer.php');
-require_once('src/messangers/Slack.php');
-
 use app\web\CsvParser;
 use app\web\DomainsChecker;
 
@@ -17,7 +9,8 @@ use app\log\Logger;
 use app\messangers\Mailer;
 use app\helpers\ArrayHelper;
 use app\messangers\Slack;
-class App {
+
+class Application {
     private function init(): bool {
         date_default_timezone_set('Etc/GMT-3');
         if (ini_get('max_execution_time') >= 30) {

@@ -52,4 +52,8 @@ class Logger {
         return file_get_contents(dirname(__DIR__, 2) . self::LOGS_DIR . '/' . $file);
     }
 
+    public static function test() {
+        echo 'test'.PHP_EOL;
+    }
+
 }
