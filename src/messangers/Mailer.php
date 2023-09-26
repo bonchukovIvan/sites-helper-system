@@ -11,5 +11,5 @@ class Mailer extends BaseMessanger {
         $message = self::create_report_message($suspected_domains);
         $subject = self::get_localization()['REPORT_SUBJECT'];
         return mail($to, $subject, $message); 
-    } 
+    }
 }

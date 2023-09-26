@@ -6,6 +6,9 @@ use UnexpectedValueException;
 
 class ArrayHelper {
     public static function create_suspected_array($http_array) { 
+        if (empty($http_array)) {
+            return [];
+        }
         if(!is_array($http_array)) {
             throw new UnexpectedValueException('Unexpected value type in params, domains must be array');
         }

@@ -19,12 +19,16 @@ class Application {
         return true;
     }
 
+    public function message($name) {
+        return 'Hi, '. $name;
+    }
+
     public function start($domains_list_url = null, $token = null, $channel = null, $to = null) {
         self::init();
 
         if (!$domains_list_url) {
-            print_r(Logger::get_last_log());
-            return Logger::get_last_log();
+            Logger::get_last_log();
+            return true;
         }
 
         $logger = new Logger();
@@ -47,5 +51,7 @@ class Application {
             $mailer = new Mailer();
             $mailer->send_to_mail($suspected_domains, $to);
         }
+
+        return true;
     }
 }
