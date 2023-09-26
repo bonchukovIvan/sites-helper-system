@@ -9,7 +9,7 @@ class Slack extends BaseMessanger {
 
     protected $lang_section = 'slack_section';
     function send_to_slack($suspected_domains, $token, $channel){ 
-        $message = self::create_report_message($suspected_domains);
+        $message = self::create_report_message($suspected_domains, true);
         $ch = curl_init("https://slack.com/api/chat.postMessage"); 
         $data = http_build_query([ 
             "token" => $token, 
