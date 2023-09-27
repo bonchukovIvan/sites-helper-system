@@ -1,8 +1,8 @@
 <?php
 
-require_once('src/app.php');
+use app\Application;
 
-use app\App;
+require_once __DIR__.'/vendor/autoload.php';
 
 
 @$domains_list_url = $argv[1] ? $argv[1] : null;
@@ -10,5 +10,5 @@ use app\App;
 @$slack_channel = $argv[3] ? $argv[3] : null;
 @$mail_to = $argv[4] ? $argv[4] : null;
 
-$app = new App();
+$app = new Application();
 $app->start($domains_list_url, $slack_token, $slack_channel, $mail_to);

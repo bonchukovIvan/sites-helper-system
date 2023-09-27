@@ -48,8 +48,12 @@ class Logger {
             echo 'Log directory empty :(' . PHP_EOL;
             return false;
         }
-        
-        return file_get_contents(dirname(__DIR__, 2) . self::LOGS_DIR . '/' . $file);
+        print_r(file_get_contents(dirname(__DIR__, 2) . self::LOGS_DIR . '/' . $file));
+        return true;
+    }
+
+    public static function test() {
+        echo 'test'.PHP_EOL;
     }
 
 }

@@ -2,14 +2,6 @@
 
 namespace app;
 
-require_once('src/web/CsvParser.php');
-require_once('src/web/DomainsChecker.php');
-require_once('src/helpers/ArrayHelper.php');
-
-require_once('src/log/Logger.php');
-require_once('src/messangers/Mailer.php');
-require_once('src/messangers/Slack.php');
-
 use app\web\CsvParser;
 use app\web\DomainsChecker;
 
@@ -17,7 +9,8 @@ use app\log\Logger;
 use app\messangers\Mailer;
 use app\helpers\ArrayHelper;
 use app\messangers\Slack;
-class App {
+
+class Application {
     private function init(): bool {
         date_default_timezone_set('Etc/GMT-3');
         if (ini_get('max_execution_time') >= 30) {
@@ -26,12 +19,16 @@ class App {
         return true;
     }
 
+    public function message($name) {
+        return 'Hi, '. $name;
+    }
+
     public function start($domains_list_url = null, $token = null, $channel = null, $to = null) {
         self::init();
 
         if (!$domains_list_url) {
-            print_r(Logger::get_last_log());
-            return Logger::get_last_log();
+            Logger::get_last_log();
+            return true;
         }
 
         $logger = new Logger();
@@ -54,5 +51,7 @@ class App {
             $mailer = new Mailer();
             $mailer->send_to_mail($suspected_domains, $to);
         }
+
+        return true;
     }
 }
