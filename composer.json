@@ -14,5 +14,9 @@
     ],
     "require-dev": {
         "phpunit/phpunit": "^10.3"
+    },
+    "require": {
+        "google/apiclient": "^2.15",
+        "google/auth": "^1.30"
     }
 }
