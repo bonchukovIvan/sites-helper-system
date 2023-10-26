@@ -11,7 +11,7 @@ class ConfigHelper {
         if (!file_exists($config_path)) {
            die('configuration file not found :('.PHP_EOL);
        }
-       $this->config = parse_ini_file($config_path);
+       $this->config = parse_ini_file($config_path, true);
     }
 
     public function get_config() {
