@@ -19,7 +19,7 @@ class ArrayHelper {
         $suspected_array = array(); 
         
         foreach($http_array as $domain => $http_code) { 
-            if ($http_code >= 500) { 
+            if ($http_code = 500) {
                 $suspected_array[$domain] = $http_code; 
             } 
         } 
