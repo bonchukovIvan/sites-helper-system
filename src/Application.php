@@ -13,12 +13,6 @@ use app\log\Logger;
 use app\messangers\Mailer;
 use app\messangers\Slack;
 
-function test($t = array(), $to) {
-    print_r($to);
-    print_r($t);
-}
-
-
 class Application {
 
     private function init(): bool {
@@ -58,48 +52,25 @@ class Application {
             arsort($checked_domains_list);
             
             $suspected_domains = ArrayHelper::create_suspected_array($checked_domains_list);
-            $positions = array();
-            
-            foreach($suspected_domains as $domain => $status) {
-                $positions[$domain] = $sheet_helper->get_cell_position($domain);
-            }
 
-            foreach($positions as $position) {
-                foreach($position as $pos) {
-                    $sheet_helper->change_color($pos);
-                }
-            }
-            
             $domains_email = array();
 
             foreach($suspected_domains as $domain => $status) {
                 foreach($all_domains_info as $info) {
-                    if($domains_cell === $domain) {
+                    if($info[$domains_cell] === $domain) {
                         $domains_email[$info[$emails_cell]][$domain] = $status;
                         continue;
                     }
-                    $chunk = array();
                 }
             }
 
             asort($domains_email);
-
-            /* move suspected domains to another pages */
-
-            // if (!empty($suspected_domains)) {
-            //     $updated_domains = ArrayHelper::create_updated_array($checked_domains_list);
-                
-            //     $sheet_helper->clear_domains(count($domains_array));
-            //     $sheet_helper->update_domains(array_keys($updated_domains));
-            //     $sheet_helper->update_suspected_domains(array_keys($suspected_domains));
-            // }
             
             if (!$suspected_domains) {
                 continue;
             }
 
             if ($domains_email) {
-                print_r($domains_email);
                 $mailer = new Mailer();
                 foreach($domains_email as $email => $domains) {
                     if(!$email) {
@@ -109,7 +80,6 @@ class Application {
                     $mailer->send_to_mail($domains, $email);
                 }
             }
-
         }            
 
         arsort($final_list);
@@ -118,7 +88,6 @@ class Application {
         
         if ($token != '' && $channel != '') {
             $suspected_domains = ArrayHelper::create_suspected_array($final_list);
-            print_r($suspected_domains);
             $slack = new Slack();
             $slack->send_to_slack($suspected_domains, $token, $channel);
         }

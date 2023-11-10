@@ -52,8 +52,4 @@ class Logger {
         return true;
     }
 
-    public static function test() {
-        echo 'test'.PHP_EOL;
-    }
-
 }
